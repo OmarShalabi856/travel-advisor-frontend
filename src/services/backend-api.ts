@@ -15,16 +15,13 @@ const api = import.meta.env.VITE_BACKEND_API_URL;
 
 export const loginAPI = async (username: string, password: string) => {
   try {
-    console.log("test 1")
     username = username.trim();
-    console.log(`${api}/api/v1/account/login`)
     const data = await axios.post<UserProfileToken>(`${api}/api/v1/account/login`,
       {
         username: username,
         password: password
       }
     );
-    console.log("test 2")
     return data;
   }
   catch (error) {
