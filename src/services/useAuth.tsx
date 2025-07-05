@@ -83,7 +83,7 @@ export const UserProvider = ({ children }: Props) => {
     return () => axios.interceptors.response.eject(interceptor);
   }, [refreshToken]);
 
-  const registerUser = async (email: string, username: string, password: string, redirectTo?: string) => {
+    const registerUser = async (email: string, username: string, password: string, redirectTo?: string) => {
     try {
       const res = await registerAPI(email, username, password);
       console.log(res)
@@ -103,17 +103,19 @@ export const UserProvider = ({ children }: Props) => {
         setRefreshToken(res.data.user.refreshToken);
         setUser(userObj);
         axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.user.accessToken}`;
-       setTimeout(() => navigate(redirectTo || "/"), 2000);
+        setTimeout(() => navigate(redirectTo || "/"), 2000);
       }
     } catch (error: any) {
-    if (axios.isAxiosError(error)) {
-      const msg = error.response?.data?.message;
-      toast.error(`Register failed: ${msg}`);
-    } else {
-      console.error("Unexpected Register error:", error);
-      toast.error("An unexpected error occurred.");
+      if (axios.isAxiosError(error)) {
+        const msg = error.response?.data?.message;
+        toast.error(`Register failed: ${msg}`);
+      } else {
+        console.error("Unexpected Register error:", error);
+        toast.error("An unexpected error occurred.");
+      }
     }
-  };
+  }; 
+
 
 const loginUser = async (email: string, password: string, redirectTo?: string) => {
   try {
@@ -151,9 +153,7 @@ const loginUser = async (email: string, password: string, redirectTo?: string) =
       toast.error("An unexpected error occurred.");
     }
   }
-};
-
-
+}
 
   const logout = () => {
     localStorage.clear();
