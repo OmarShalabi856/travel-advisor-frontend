@@ -4,11 +4,10 @@ export default function About() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-10 text-gray-800">
       <div className="flex flex-col items-center gap-4">
-        <img className="h-16 w-auto" src="/travel-logo.jpg" alt="Travel Advisor Logo" />
         <h1 className="text-3xl font-bold">About Travel Advisor</h1>
 
         <p className="text-md leading-7">
-          <strong>Travel Advisor</strong> is a full-stack web application built using <strong>React Router v7</strong> on the frontend and <strong>ASP.NET Core</strong> on the backend. It features secure authentication powered by <strong>JWT (JSON Web Tokens)</strong> and uses <strong>PostgreSQL</strong> as the primary database.
+          <strong>Travel Advisor</strong> is a full-stack web application built using <strong>React Router</strong> on the frontend and <strong>ASP.NET Core</strong> on the backend. It features secure authentication powered by <strong>JWT (JSON Web Tokens)</strong> and uses <strong>PostgreSQL</strong> as the primary database.
         </p>
 
         <p className="text-md leading-7">
