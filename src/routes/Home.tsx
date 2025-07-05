@@ -78,8 +78,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col sm:flex-row justify-between w-full mx-auto">
-      {!showFilter && <button onClick={() => { setShowFilter(true) }} className="sm:hidden  mr-auto text-center rounded-lg  size-15">
-        <img src={"/filtericon.jpg"}></img>
+      {!showFilter && <button onClick={() => { setShowFilter(true) }} className="sm:hidden  mr-auto text-center rounded-lg">
+        <img className="size-12" src={"/filtericon.jpg"}></img>
       </button>}
      <div className={`${showFilter ? "block" : "hidden"} sm:block `}>
         <FilterSideBar

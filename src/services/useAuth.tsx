@@ -105,16 +105,19 @@ export const UserProvider = ({ children }: Props) => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.user.accessToken}`;
        setTimeout(() => navigate(redirectTo || "/"), 2000);
       }
-    } catch (error) {
-      toast.warning("A Server Error Occurred!");
+    } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const msg = error.response?.data?.message;
+      toast.error(`Register failed: ${msg}`);
+    } else {
+      console.error("Unexpected Register error:", error);
+      toast.error("An unexpected error occurred.");
     }
   };
 
- const loginUser = async (email: string, password: string, redirectTo?: string) => {
+const loginUser = async (email: string, password: string, redirectTo?: string) => {
   try {
-    console.log("Attempting login...");
     const res = await loginAPI(email, password);
-    console.log("Response from loginAPI:", res);
 
     if (res?.data?.accessToken && res.data.refreshToken) {
       const userObj = {
@@ -133,20 +136,23 @@ export const UserProvider = ({ children }: Props) => {
       setUser(userObj);
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${res.data.accessToken}`;
-
       toast.success("Login Success!");
-      console.log("Navigating to:", redirectTo || "/");
 
       setTimeout(() => navigate(redirectTo || "/"), 2000);
     } else {
-      toast.warning("Invalid credentials or missing tokens.");
-      console.warn("Login API response missing tokens:", res?.data);
+      toast.warning("Missing authentication tokens.");
     }
-  } catch (error) {
-    console.error("Login error:", error);
-    toast.warning("A Server Error Occurred!");
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      const msg = error.response?.data?.message || "Invalid credentials.";
+      toast.error(`Login failed: ${msg}`);
+    } else {
+      console.error("Unexpected login error:", error);
+      toast.error("An unexpected error occurred.");
+    }
   }
 };
+
 
 
   const logout = () => {
