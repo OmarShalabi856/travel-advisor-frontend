@@ -56,13 +56,23 @@ export const uploadImageCloudinary = async (files: FileList) => {
     formData.append("upload_preset", "travel-advisor");
     formData.append("folder", "trips/uploads");
 
-    const res = await fetch("https://api.cloudinary.com/v1_1/dooaepjfa/image/upload", {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const res = await fetch("https://api.cloudinary.com/v1_1/dooaepjfa/image/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await res.json();
-    if (data.secure_url) uploadUrls.push(data.secure_url);
+      const data = await res.json();
+
+      if (data.secure_url) {
+        uploadUrls.push(data.secure_url);
+      } else {
+        throw new Error(data.error?.message || "Unknown upload error");
+      }
+    } catch (error: any) {
+      console.error("Upload failed:", error);
+      toast.error(`Failed to upload ${file.name}: ${error.message}`);
+    }
   }
 
   return uploadUrls;
