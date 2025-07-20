@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 import Papa from 'papaparse'
 import { toast } from 'react-toastify'
 import { useAuth } from '../services/useAuth'
-import { uploadImageCloudinary } from '../services/backend-api'
+import { addTrip, uploadImageCloudinary } from '../services/backend-api'
 import type { Trip } from '../models/Trip'
 
 const schema = z.object({
@@ -61,7 +61,7 @@ const AddDestination = () => {
         ...data,
         imageUrls: uploadedUrls,
       };
-      await addTrip(trip);
+      addTrip(trip);
       toast.success("Trip added successfully!");
       setTimeout(() => navigate("/"), 2000);
     } catch (error) {
@@ -144,7 +144,4 @@ const AddDestination = () => {
 }
 
 export default AddDestination
-function addTrip(trip: Trip) {
-  throw new Error('Function not implemented.')
-}
 
